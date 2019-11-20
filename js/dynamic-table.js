@@ -8,9 +8,8 @@ function setTableHeader(title, father){
 	father.append(header);
 }
 
-
 // monta as linhas da tabela
-function setLines(dataJSON, dataAtributes, columns, father){
+function setLines(dataJSON, dataAtributes, columns, actions, father){
 	$.each(dataJSON, function(key, val){
 		let line = '<tr';
 		
@@ -24,6 +23,11 @@ function setLines(dataJSON, dataAtributes, columns, father){
 		for (let i = 0; i < columns.length; i++) {
 			line += '<td>'+val[columns[i]]+'</td>';
 		}
+		line += '<td>';
+		for (let i = 0; i < actions.length; i++) {
+			line += actions[i];
+		}
+		line += '</td>';
 		line += '</tr>';
 		father.append(line);
 		
@@ -57,11 +61,27 @@ let arrayJSON = [
 
 ];
 
-let titles = ['Name', 'City', 'Phone Number']
+let titles = ['Name', 'City', 'Phone Number', 'Actions']
 
 let columns = ['name', 'city', 'phone'];
 
 let attrs = ['id', 'phone', 'status'];
 
+let actions = ['<a href="#" class="edit">Edit</a>', '<a href="#" class="remove">Remove</a>'];
+
 setTableHeader(titles, $('#records'));
-setLines(arrayJSON, attrs, columns, $('#records-body'));
+setLines(arrayJSON, attrs, columns, actions, $('#records-body'));
+
+$('#records').on('click', '.remove', function(e){
+	$(this).parents('tr').remove();
+	return false;
+});
+
+$('#records').on('click', '.edit', function(e){
+	let text = '';
+	for (var i = 0; i < columns.length; i++) {
+		text += titles[i] + ':' + $(this).parents('tr').find('td').eq(i).text() + ' | ';
+	}
+	alert(text);
+	return false;
+});
