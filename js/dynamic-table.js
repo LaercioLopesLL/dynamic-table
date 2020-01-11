@@ -9,7 +9,7 @@ function setTableHeader(title, father){
 }
 
 // monta as linhas da tabela
-function setLines(dataJSON, dataAtributes, columns, actions, father){
+function setRows(dataJSON, dataAtributes, columns, actions, father){
 	$.each(dataJSON, function(key, val){
 		let line = '<tr';
 		
@@ -31,7 +31,7 @@ function setLines(dataJSON, dataAtributes, columns, actions, father){
 		line += '</tr>';
 		father.append(line);
 		
-		// visualizar HTML gerado
+		// visualizar HTML gerado no console
 		console.log(line);
 	});
 }
@@ -61,7 +61,7 @@ let arrayJSON = [
 
 ];
 
-let titles = ['Name', 'City', 'Phone Number', 'Actions']
+let titleColumns = ['Name', 'City', 'Phone Number', 'Actions']
 
 let columns = ['name', 'city', 'phone'];
 
@@ -69,19 +69,19 @@ let attrs = ['id', 'phone', 'status'];
 
 let actions = ['<a href="#" class="edit">Edit</a>', '<a href="#" class="remove">Remove</a>'];
 
-setTableHeader(titles, $('#records'));
-setLines(arrayJSON, attrs, columns, actions, $('#records-body'));
+setTableHeader(titleColumns, $('#records'));
+setRows(arrayJSON, attrs, columns, actions, $('#records-body'));
 
 $('#records').on('click', '.remove', function(e){
+	e.preventDefault();
 	$(this).parents('tr').remove();
-	return false;
 });
 
 $('#records').on('click', '.edit', function(e){
+	e.preventDefault();
 	let text = '';
 	for (var i = 0; i < columns.length; i++) {
-		text += titles[i] + ':' + $(this).parents('tr').find('td').eq(i).text() + ' | ';
+		text += titleColumns[i] + ':' + $(this).parents('tr').find('td').eq(i).text() + ' | ';
 	}
 	alert(text);
-	return false;
 });
