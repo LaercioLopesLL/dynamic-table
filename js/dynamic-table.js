@@ -21,7 +21,7 @@ function setRows(dataJSON, dataAtributes, columns, actions, father){
 		
 		// adiciona colunas
 		for (let i = 0; i < columns.length; i++) {
-			line += '<td>'+val[columns[i]]+'</td>';
+			line += val[columns[i]] ? '<td>'+val[columns[i]]+'</td>' : '<td></td>';
 		}
 		line += '<td>';
 		for (let i = 0; i < actions.length; i++) {
@@ -61,7 +61,7 @@ let arrayJSON = [
 
 ];
 
-let titleColumns = ['Name', 'City', 'Phone Number', 'Actions']
+let titleColumns = ['Name', 'City', 'Phone Number', 'Actions'];
 
 let columns = ['name', 'city', 'phone'];
 
